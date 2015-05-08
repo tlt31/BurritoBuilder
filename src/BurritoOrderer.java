@@ -1,3 +1,5 @@
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -8,17 +10,13 @@ public class BurritoOrderer {
     private static Burrito cheesy;
     private static Burrito extraHot;
     private static Burrito vegetarian;
-    private static Burrito dessert;
-    private static Burrito sPork;
 
     public static void main(String[] args)
     {
 
         cheesy = new Burrito("Cheesy", 8.50);
         extraHot = new Burrito("Extra Hot", 8.40);
-        vegetarian = new Burrito("Vegetarian", 8.40);
-        dessert = new Burrito("Dessert", 8.40);
-        sPork = new Burrito("Shredded Pork", 8.40);
+        vegetarian = new Burrito("Vegetarian", 7.25);
 
         System.out.println(" ");
         System.out.println("Welcome to Katie's Burrito Barn!");
@@ -65,11 +63,9 @@ public class BurritoOrderer {
         System.out.println(cheesy.getBurritoName() + "      " + cheesy.getPrice());
         System.out.println(extraHot.getBurritoName() + "      " + extraHot.getPrice());
         System.out.println(vegetarian.getBurritoName() + "      " + vegetarian.getPrice());
-        System.out.println(dessert.getBurritoName() + "       " + dessert.getPrice());
-        System.out.println(sPork.getBurritoName() + "        " + sPork.getPrice());
 
         System.out.println("");
-        System.out.println("Press any key to return to the main menu");
+        System.out.println("Press the enter to return to the main menu");
 
         Scanner scanner = new Scanner(System.in);
         String readString = scanner.nextLine();
@@ -82,7 +78,52 @@ public class BurritoOrderer {
 
     public static void placeOrder()
     {
+        Scanner scanner = new Scanner(System.in);
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
+
+        System.out.println("PLACE AN ORDER");
         System.out.println();
+        System.out.println("Please enter your name for the order:");
+        String ordeName = scanner.nextLine();
+        System.out.println("Please enter your phone number for the order:");
+        String phoneNumber = scanner.nextLine();
+        System.out.println("How many Cheesy Burritos would you like to order?: ");
+        int nCheesy = scanner.nextInt();
+        System.out.println("How many Extra Hot Burritos would you like to order?: ");
+        int nExtraHot = scanner.nextInt();
+        System.out.println("How many Vegetarian Burritos would you like to order?: ");
+        int nVeg = scanner.nextInt();
+
+
+        System.out.println("");
+        System.out.println("Press the enter key to submit your order");
+
+
+        String readString = scanner.nextLine();
+        while(readString!=null) {
+            System.out.println();
+            System.out.println("ORDER DETAILS");
+            System.out.println(ordeName);
+            System.out.println(phoneNumber);
+            System.out.println();
+            double pCheesy = nCheesy*cheesy.getPrice();
+            double pExtraHot = nExtraHot*extraHot.getPrice();
+            double pVeg = nVeg*vegetarian.getPrice();
+            System.out.println(nCheesy + " Cheesy Burritos " + nf.format(pCheesy));
+            System.out.println(nExtraHot + " Extra Hot Burritos " + (nf.format(pExtraHot)));
+            System.out.println(nVeg + " Vegetarian Burritos " + (nf.format(pVeg)));
+            double orderTotal = pCheesy + pExtraHot + pVeg;
+            double roundedNumber = Math.round(orderTotal);
+            System.out.println("Total: " + (nf.format(roundedNumber)));
+            System.out.println("");
+            System.out.println("Press the enter to return to the main menu");
+            String readString2 = scanner.nextLine();
+            while(readString2!=null) {
+                mainMenu();
+            }
+        }
+
+
     }
 
     private static class Burrito{
